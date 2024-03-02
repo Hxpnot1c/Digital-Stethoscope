@@ -1,10 +1,7 @@
 from Adafruit_MCP3008 import MCP3008
 from Adafruit_GPIO.SPI import SpiDev
-from itertools import count
 import matplotlib.pyplot as plt
 import time
-import pandas as pd
-from datetime import datetime
 
 # Access ADC using hardware SPI (because its faster)
 spi_port = 0
