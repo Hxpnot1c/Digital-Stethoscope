@@ -34,7 +34,7 @@ for adc_value, timestamp in sample_data():
 
 # Plots the data and saves it to 'Data/ADC_Readings.png'
 plt.plot (timestamps, values, linestyle='solid', linewidth=0.4)
-plt.savefig('Data/ADC_Readings.png', bbox_inches='tight')
+plt.savefig('Res/ADC_Readings.png', bbox_inches='tight')
 plt.show()
 
 # Prints how many data points were collected
