@@ -27,12 +27,12 @@ sample_time = 10
 
 
 print('Sampling...')
-starttime = time.time()
+starttime = time.perf_counter()
 # Iterates through bins
 for bin in range(1, sample_time * 1000 + 1):
     # Collects data samples using sample_data() function for 1 sample_period seconds (1 millisecond)
     t_end = starttime + (bin * sampling_period)
-    while time.time() < t_end:
+    while time.perf_counter() < t_end:
         values.append(mcp.read_adc(0))
     # Computes mean of data from 1ms of sampling and appends it binned_values
     binned_values.append(mean(values))
@@ -53,9 +53,9 @@ ax1.set_title('Input Signal')
 cutoff_frequency = 200
 order = 4
 sos = signal.butter(order, cutoff_frequency, 'low', False, 'sos', sampling_rate)
-low_pass_signal = signal.sosfilt(sos, input_signal)
+low_pass_signal, _ = signal.sosfilt(sos, input_signal, zi=signal.sosfilt_zi(sos) * 387.5)
 sos2 = signal.butter(order, cutoff_frequency, 'low', False, 'sos', sampling_rate)
-high_pass_signal = signal.sosfilt(sos2, low_pass_signal)
+high_pass_signal, _ = signal.sosfilt(sos2, low_pass_signal, zi=signal.sosfilt_zi(sos2) * 387.5)
 ax2.plot(timestamps, high_pass_signal, linestyle='solid', linewidth=0.4)
 ax2.set_title('4th Order Butterworth Filter at 20Hz and 200Hz')
 plt.savefig('Res/Raw vs Filtered Data.png', bbox_inches='tight')
