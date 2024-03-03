@@ -6,7 +6,7 @@ import time
 # Access ADC using hardware SPI (because its faster)
 spi_port = 0
 spi_device = 0
-mcp = MCP3008(spi=SpiDev(spi_port, spi_device, 10000))
+mcp = MCP3008(spi=SpiDev(spi_port, spi_device, 5000))
 
 # Data sampling function as a generator that outputs the current data value on a specified ADC channel and provides a timestamp of the data reading
 def sample_data(channel=0):
@@ -28,11 +28,12 @@ for adc_value, timestamp in sample_data():
         break
     values.append(adc_value)
     timestamps.append(timestamp)
+    time.sleep(1e-5)
 
 # Plots the data and saves it to 'Data/ADC_Readings.png'
 plt.plot (timestamps, values, linestyle='solid', linewidth=0.4)
 plt.savefig('Res/ADC_Readings.png', bbox_inches='tight')
 plt.show()
 
-# Prints how many data points were collected
-print(len(values))
+# Prints average samples per second
+print(len(values) / 10)
