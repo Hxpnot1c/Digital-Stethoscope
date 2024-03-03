@@ -27,12 +27,12 @@ sample_time = 10
 
 
 print('Sampling...')
-starttime = time.time()
+starttime = time.perf_counter()
 # Iterates through bins
 for bin in range(1, sample_time * 1000 + 1):
     # Collects data samples using sample_data() function for 1 sample_period seconds (1 millisecond)
     t_end = starttime + (bin * sampling_period)
-    while time.time() < t_end:
+    while time.perf_counter() < t_end:
         values.append(mcp.read_adc(0))
     # Computes mean of data from 1ms of sampling and appends it binned_values
     binned_values.append(mean(values))
