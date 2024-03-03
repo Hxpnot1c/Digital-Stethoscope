@@ -4,7 +4,6 @@ from Adafruit_GPIO.SPI import SpiDev
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import interpolate
 
 # Access ADC using hardware SPI (because its faster)
 spi_port = 0
@@ -25,8 +24,6 @@ samples = 0
 sampling_rate = 1000
 sampling_period = 1 / sampling_rate
 sample_time = 10
-saved_vals = []
-timestamps = []
 
 
 print('Sampling...')
@@ -36,10 +33,7 @@ for bin in range(1, sample_time * 1000 + 1):
     # Collects data samples using sample_data() function for 1 sample_period seconds (1 millisecond)
     t_end = starttime + (bin * sampling_period)
     while time.time() < t_end:
-        adc_val = mcp.read_adc(0)
-        values.append(adc_val)
-        saved_vals.append(adc_val)
-        timestamps.append(time.time() - starttime)
+        values.append(mcp.read_adc(0))
     # Computes mean of data from 1ms of sampling and appends it binned_values
     binned_values.append(mean(values))
     samples += len(values)
@@ -50,16 +44,7 @@ for bin in range(1, sample_time * 1000 + 1):
 print('Sampling complete!')
 print(f'No. of samples: {samples}')
 print(f'Mean val: {mean(binned_values)}')
-
-f = interpolate.interp1d(timestamps, saved_vals)
-new_timestamps = np.linspace(int(min(timestamps)), int(max(timestamps)), int((max(timestamps) - min(timestamps)) * 1000))
-new_vals = f(new_timestamps[2:-1])
-fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-ax1.plot(new_timestamps[2:-1], new_vals, linestyle='solid', linewidth=0.4)
-ax1.set_title("Interpolation")
-
 # Plots the data and saves it to Digital-Stethoscope/Res/Data_Test
-ax2.plot(binned_timestamps, binned_values, linestyle='solid', linewidth=0.4)
-ax2.set_title("Equal-Width Binning")
+plt.plot(binned_timestamps, binned_values, linestyle='solid', linewidth=0.4)
 plt.savefig('Res/Data_Test.png', bbox_inches='tight')
 plt.show()
