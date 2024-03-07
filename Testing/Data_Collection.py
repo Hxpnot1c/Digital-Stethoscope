@@ -29,7 +29,7 @@ sample_time = 10
 print('Sampling...')
 starttime = time.perf_counter()
 # Iterates through bins
-for bin in range(1, sample_time * 1000 + 1):
+for bin in range(1, sample_time * sampling_rate + 1):
     # Collects data samples using sample_data() function for 1 sample_period seconds (1 millisecond)
     t_end = starttime + (bin * sampling_period)
     while time.perf_counter() < t_end:
