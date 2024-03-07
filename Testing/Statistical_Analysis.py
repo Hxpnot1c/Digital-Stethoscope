@@ -35,7 +35,7 @@ sampling_time = 10
 print('Sampling...')
 starttime = time.perf_counter()
 # Iterates through bins
-for bin in range(1, sampling_time * 1000 + 1):
+for bin in range(1, sampling_time * sampling_rate + 1):
     # Collects data samples using sample_data() function for 1 sample_period seconds (1 millisecond)
     t_end = starttime + (bin * sample_period)
     while time.perf_counter() < t_end:
@@ -62,14 +62,14 @@ sos2 = signal.butter(order, cutoff_frequency, 'low', False, 'sos', sampling_rate
 band_pass_signal, _ = signal.sosfilt(sos2, low_pass_signal, zi=signal.sosfilt_zi(sos2) * 387.5)
 ax2.plot(timestamps, band_pass_signal, linestyle='solid', linewidth=0.4)
 ax2.set_title('4th Order Butterworth Filter at 20Hz and 200Hz')
-plt.savefig('Res/Archived_Data/Image_Plots/Raw vs Filtered Data.png', bbox_inches='tight')
+plt.savefig('Res/Archived_Data/Image Plots/Raw vs Filtered Data.png', bbox_inches='tight')
 plt.show()
 
 # Writing .wav files for unfiltered and filtered audio data
 remapped_input_signal = np.int16(remap_range(np.array(input_signal), 0, 1023, -31768, 32767))
-write('Res/Archived Data/Audio/Input_Signal.wav', sampling_rate, remapped_input_signal)
+write('Res/Archived_Data/Audio/Input_Signal.wav', sampling_rate, remapped_input_signal)
 remapped_filtered_signal = np.int16(remap_range(np.array(band_pass_signal), 0, 1023, -31768, 32767))
-write('Res/Archived Data/Audio/Filtered_Signal.wav', sampling_rate, remapped_filtered_signal)
+write('Res/Archived_Data/Audio/Filtered_Signal.wav', sampling_rate, remapped_filtered_signal)
 
 # Plot frquency domain data for unfiltered and filtered data using fast fourier transform
 samples = sampling_rate * sampling_time
@@ -82,5 +82,5 @@ ax1.set_title('Frequency Domain Input Signal')
 ax2.plot(x, y2, linestyle='solid', linewidth=0.4)
 ax2.set_title('Frequency Domain Filtered Signal')
 plt.xlim(0, 500)
-plt.savefig('Res/Archived_Data/Image_Plots/Frequency Domain Raw vs Filtered Data.png', bbox_inches='tight')
+plt.savefig('Res/Archived_Data/Image Plots/Frequency Domain Raw vs Filtered Data.png', bbox_inches='tight')
 plt.show()
