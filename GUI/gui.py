@@ -11,20 +11,20 @@ from matplotlib.figure import Figure
 from numpy import random
 import numpy as np
 from PyQt6 import QtCore, QtGui, QtWidgets
-import time
-import testset as ts
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
         MainWindow.resize(1920, 1080)
+        # Opening Stylesheet for the GUI
         with open("guistyle.css", "r") as f:
                 MainWindow.setStyleSheet(f.read())
         
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
+        #Central widget which contains the Graph
         self.frame = QtWidgets.QFrame(parent=self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(32, 30, 1851, 651))
         self.frame.setStyleSheet("")
@@ -34,10 +34,12 @@ class Ui_MainWindow(object):
         #create a horizontal layout
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.frame)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        #integrating graph into the frame
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
         self.horizontalLayout_4.addWidget(self.canvas)
         self.plotOnCanvas()
+        #AI frame
         self.frame_2 = QtWidgets.QFrame(parent=self.centralwidget)
         self.frame_2.setGeometry(QtCore.QRect(60, 700, 881, 331))
         self.frame_2.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
@@ -51,12 +53,14 @@ class Ui_MainWindow(object):
         self.label_2.setGeometry(QtCore.QRect(450, 280, 31, 41))
         self.label_2.setStyleSheet("font-size: 36px")
         self.label_2.setObjectName("label_2")
+        #Patient info frame
         self.frame_3 = QtWidgets.QFrame(parent=self.centralwidget)
         self.frame_3.setGeometry(QtCore.QRect(980, 700, 881, 331))
         self.frame_3.setStyleSheet("")
         self.frame_3.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_3.setObjectName("frame_3")
+        #Adding Form Entries
         self.textEdit = QtWidgets.QTextEdit(parent=self.frame_3)
         self.textEdit.setGeometry(QtCore.QRect(580, 20, 281, 201))
         self.textEdit.setObjectName("textEdit")
@@ -119,7 +123,7 @@ class Ui_MainWindow(object):
         self.sexLabel.setText(_translate("MainWindow", "Sex"))
         self.ageLabel_2.setText(_translate("MainWindow", "Age"))
         self.ageLabel.setText(_translate("MainWindow", "DoB"))
-
+    #Plotting Graph function (Using test data)
     def plotOnCanvas(self):
         self.figure.clear()
         fruits = ["apples","apples","apples","apples",]
