@@ -1,6 +1,7 @@
 import librosa
 import numpy as np
 import pandas as pd
+import torch
 
 DATASET = 'Res/DigiScope Dataset/'
 SAMPLE_RATE = 10000
@@ -50,4 +51,17 @@ def one_hot_encode(labels, classes):
     return encoded_labels
 
 one_hot_y = one_hot_encode(np.array(y_train), 3)
-print(train_df.iloc[:,:-1].shape)
+class AudioDataset():
+    def __init__(self, data_csv):
+        self.data = pd.read_csv(DATASET + data_csv)
+        self.encoded_labels = one_hot_encode(np.array(self.data.iloc[:,-1]), 3)
+    
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, index):
+        features = torch.tensor(self.data.iloc[index,:-1].values)
+        label = torch.tensor(self.encoded_labels[index])
+        return features, label
+    
+data = AudioDataset('train_data.csv')
