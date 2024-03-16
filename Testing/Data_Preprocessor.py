@@ -60,5 +60,4 @@ class AudioDataset():
 
         return features
 
-DataTest = AudioDataset('Res/DigiScope Dataset/', 'training_labels.csv')
-print(DataTest.__getitem__(0))
+#DataTest = AudioDataset('Res/DigiScope Dataset/', 'training_labels.csv')
