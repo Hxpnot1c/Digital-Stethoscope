@@ -53,7 +53,6 @@ next_bpm_sample_time = 0
 for bin in range(1, sampling_time * sampling_rate + 1):
     # Collects data samples using sample_data() function for 1 sample_period seconds (1 millisecond)
     t_end = starttime + (bin * sample_period)
-    #TODO fix heart rate calulation
     while (time.perf_counter()) < t_end:
         values.append(mcp.read_adc(0))
     # Computes mean of data from 1ms of sampling and appends it binned_values
