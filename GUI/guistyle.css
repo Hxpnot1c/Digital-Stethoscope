@@ -44,8 +44,10 @@ QPushButton{
 	background-color: #568af2;
 	border-radius: 15px;
 	color:rgb(255, 255, 255);
-    font: 16pt "Manrope"
+    font: 16pt "Manrope";
 }
+QPushButton:hover {background-color: #2a6bef;}
+
 QFormLayout{
 	background-color: #2a2e32;
 }

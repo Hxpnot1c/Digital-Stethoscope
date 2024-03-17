@@ -12,15 +12,22 @@ from numpy import random
 import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
+
 class Ui_MainWindow(object):
+        
+    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
         MainWindow.resize(1920, 1080)
         # Opening Stylesheet for the GUI
-        with open("guistyle.css", "r") as f:
+        with open("GUI/guistyle.css", "r") as f:
                 MainWindow.setStyleSheet(f.read())
         
+        #temporary variable which will hold ai output
+        ai_output = ""
+                
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
@@ -45,9 +52,24 @@ class Ui_MainWindow(object):
         self.frame_2.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_2.setObjectName("frame_2")
+        
+        #function to change colour of bordor when ai has an output currently configured to a button for testing
+        def ai_indicator():
+            self.frame_2.setStyleSheet("border-color: #00cc00;")
+            self.label_2.hide()
+            
+        #reset fields
+        def reset():
+            self.ageLineEdit.clear()
+            self.patientNameLineEdit.clear()
+            self.sexLineEdit.clear()
+            self.DoBlineEdit.clear()
+            self.textEdit.clear()
+            
+            
         self.label = QtWidgets.QLabel(parent=self.frame_2)
         self.label.setGeometry(QtCore.QRect(18, 15, 851, 301))
-        self.label.setText("")
+        self.label.setText(ai_output)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(parent=self.frame_2)
         self.label_2.setGeometry(QtCore.QRect(450, 280, 31, 41))
@@ -67,6 +89,8 @@ class Ui_MainWindow(object):
         self.pushButton = QtWidgets.QPushButton(parent=self.frame_3)
         self.pushButton.setGeometry(QtCore.QRect(350, 260, 241, 51))
         self.pushButton.setObjectName("pushButton")
+        #calling reset function on click
+        self.pushButton.clicked.connect(reset)
         self.formLayoutWidget = QtWidgets.QWidget(parent=self.frame_3)
         self.formLayoutWidget.setGeometry(QtCore.QRect(10, 20, 551, 231))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
@@ -83,21 +107,21 @@ class Ui_MainWindow(object):
         self.sexLineEdit = QtWidgets.QLineEdit(parent=self.formLayoutWidget)
         self.sexLineEdit.setObjectName("sexLineEdit")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.sexLineEdit)
-        self.ageLabel_2 = QtWidgets.QLabel(parent=self.formLayoutWidget)
-        self.ageLabel_2.setObjectName("ageLabel_2")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.LabelRole, self.ageLabel_2)
+        self.AgeLabel = QtWidgets.QLabel(parent=self.formLayoutWidget)
+        self.AgeLabel.setObjectName("AgeLabel")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.LabelRole, self.AgeLabel)
         self.ageLineEdit = QtWidgets.QLineEdit(parent=self.formLayoutWidget)
         self.ageLineEdit.setObjectName("ageLineEdit")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.FieldRole, self.ageLineEdit)
-        self.ageLabel = QtWidgets.QLabel(parent=self.formLayoutWidget)
-        self.ageLabel.setObjectName("ageLabel")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.LabelRole, self.ageLabel)
+        self.DoB = QtWidgets.QLabel(parent=self.formLayoutWidget)
+        self.DoB.setObjectName("DoB")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.LabelRole, self.DoB)
         self.patientNameLineEdit = QtWidgets.QLineEdit(parent=self.formLayoutWidget)
         self.patientNameLineEdit.setObjectName("patientNameLineEdit")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.patientNameLineEdit)
-        self.lineEdit = QtWidgets.QLineEdit(parent=self.formLayoutWidget)
-        self.lineEdit.setObjectName("lineEdit")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.lineEdit)
+        self.DoBlineEdit = QtWidgets.QLineEdit(parent=self.formLayoutWidget)
+        self.DoBlineEdit.setObjectName("DoBlineEdit")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.DoBlineEdit)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -118,8 +142,8 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Save"))
         self.patientNameLabel.setText(_translate("MainWindow", "Name"))
         self.sexLabel.setText(_translate("MainWindow", "Sex"))
-        self.ageLabel_2.setText(_translate("MainWindow", "Age"))
-        self.ageLabel.setText(_translate("MainWindow", "DoB"))
+        self.AgeLabel.setText(_translate("MainWindow", "Age"))
+        self.DoB.setText(_translate("MainWindow", "DoB"))
     #Plotting Graph function (Using test data)
     def plotOnCanvas(self):
         self.figure.clear()
