@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
         MainWindow.setEnabled(True)
         MainWindow.resize(1920, 1080)
         # Opening Stylesheet for the GUI
-        with open("GUI/guistyle.css", "r") as f:
+        with open("guistyle.css", "r") as f:
                 MainWindow.setStyleSheet(f.read())
         
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
