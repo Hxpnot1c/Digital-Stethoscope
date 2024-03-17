@@ -10,7 +10,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from numpy import random
 import numpy as np
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
         MainWindow.setEnabled(True)
         MainWindow.resize(1920, 1080)
         # Opening Stylesheet for the GUI
-        with open("guistyle.css", "r") as f:
+        with open("GUI/guistyle.css", "r") as f:
                 MainWindow.setStyleSheet(f.read())
         
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
@@ -99,9 +99,6 @@ class Ui_MainWindow(object):
         self.lineEdit.setObjectName("lineEdit")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.lineEdit)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.statusBar = QtWidgets.QStatusBar(parent=MainWindow)
-        self.statusBar.setObjectName("statusBar")
-        MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
