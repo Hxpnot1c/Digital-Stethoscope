@@ -1,0 +1,8 @@
+Print all 3D models, the specifc material is listed in file name.
+All models should be 100% infill
+(Our models were printed using Creality CR10 Smart Pro)
+Most FDM 3D printers will be sufficient
+Default setting on Cura slicer (with 100% infill) should work
+Supports ON for Steth Ring - Normal
+
+See 
