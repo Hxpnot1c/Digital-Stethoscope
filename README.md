@@ -1,9 +1,13 @@
 # Digital-Stethoscope
 
-Within this file are the 500-Word Summary and Build Guide
+## Video
 
-500 word summary ( to add later )
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
+## Summary
+
+
+ 
 ## Build Guide
 
 Print all 3D models, the specifc material is listed in file name.
