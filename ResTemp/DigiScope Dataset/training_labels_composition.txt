@@ -1,8 +1,0 @@
-,195
-0,320
-1,46
-2,95
- - unlabelled
-0 - normal
-1 - extrastole
-2 - murmur
