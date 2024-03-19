@@ -33,7 +33,7 @@ class Ui_MainWindow(object):
         with open(Path(self.root_dir / "guistyle.css"), "r") as f:
                 MainWindow.setStyleSheet(f.read())
 
-        self.data = pd.read_csv(self.root_dir / 'data.csv')
+        self.data = list(pd.read_csv(self.root_dir / 'data.csv').iloc[:, -1])
         #temporary variable which will hold ai output
         
         ai_output = ""
@@ -58,10 +58,11 @@ class Ui_MainWindow(object):
         self._plot_ref = None
         self.update_plot()
         self.horizontalLayout_4.addWidget(self.canvas)
-        if data := pd.read_csv(self.root_dir / 'data.csv') != self.data:
-            self.data = data
-            self.BPM.setText(data[-1])
-            self.update_plot()
+        self.timer = QtCore.QTimer(self.centralwidget)
+        self.timer.setInterval(10)
+        self.timer.timeout.connect(self.check_for_updates)
+        self.timer.start()
+
         #AI frame
         self.frame_2 = QtWidgets.QFrame(parent=self.centralwidget)
         self.frame_2.setGeometry(QtCore.QRect(60, 700, 881, 331))
@@ -150,6 +151,12 @@ class Ui_MainWindow(object):
         self.BPM.setText("000")
         self.BPM.adjustSize()
 
+    def check_for_updates(self):
+        if (data := list(pd.read_csv(self.root_dir / 'data.csv').iloc[:, -1])) != self.data:
+            self.data = data
+            self.BPM.setText(str(int(data[-1])))
+            self.update_plot()
+    
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -169,6 +176,7 @@ class Ui_MainWindow(object):
         self.DoB.setText(_translate("MainWindow", "DoB"))
     #Plotting Graph function (Using test data)
     def update_plot(self):
+        print('test')
         self.y_data = self.y_data[50:] + self.data[:50]
         
         if self._plot_ref is None:
@@ -178,11 +186,15 @@ class Ui_MainWindow(object):
         else:
             self._plot_ref.set_ydata(self.y_data)
         
-        self._plot_ref.set_color('#2a6bef')
+        self._plot_ref.set_color('#ffffff')
         self.canvas.axes.set_facecolor('#2a2e32')
         self.canvas.figure.set_facecolor('#2a2e32')
         self.canvas.axes.spines['right'].set_visible(False)
         plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+        self.canvas.axes.xaxis.label.set_color('white')
+        self.canvas.axes.yaxis.label.set_color('white')
+        self.canvas.axes.tick_params(colors='white')
 
         self.canvas.draw()
 

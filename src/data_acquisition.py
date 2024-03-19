@@ -18,6 +18,7 @@ def mean(values):
     if not len(values):
         print("Error")
         return mcp.read_adc(0)
+        # values.append(np.random.randint(0, 1024))
     sum = np.sum(values)
     mean = sum / len(values)
     return mean
@@ -46,11 +47,10 @@ def calculate_heart_rate(t1, t2, t3, t4, t5):
     return bpm
 
 
-
 values, binned_values, binned_timestamps, bpm_sample_times = [], [], [], []
-sampling_rate = 10000
+sampling_rate = 1000
 sample_period = 1 / sampling_rate
-sampling_time = 20
+sampling_time = 200
 bpm_sample_num = 11 + 2
 bpm_values = []
 
@@ -62,6 +62,7 @@ starttime = time.perf_counter()
 for bin in range(1, sampling_time * sampling_rate + 1):
     t_end = starttime + (bin * sample_period)
     while (time.perf_counter()) < t_end:
+        # values.append(np.random.randint(0, 1024))
         values.append(mcp.read_adc(0))
 
     # Computes mean of data from 1ms of sampling and appends it binned_values
@@ -85,13 +86,13 @@ for bin in range(1, sampling_time * sampling_rate + 1):
         elif len(bpm_sample_times) == bpm_sample_num:
             bpm_sample_num += 2
             t1, t2, t3, t4, t5 = cycle_forward(bpm_sample_times[-1] - bpm_sample_times[-3], t1, t2, t3, t4, t5)
-            bpm_values.append(calculate_heart_rate(t1, t2, t3, t4, t5))
+            bpm_values.append(calculate_heart_rate(t1, t2, t3, t4, t5)) 
 
-    if (bin+1) % 100 == 0:
-        newest_bins = binned_values[-100:]
+    if (bin+1) % 1000 == 0:
+        newest_bins = binned_values[-1000:]
         rebinned_values = []
         for index in range(50):
-            rebinned_values.append(sum(newest_bins[index*2:(index+1)*2]) / 2)
+            rebinned_values.append(sum(newest_bins[index*20:(index+1)*20]) / 20)
         if len(bpm_values) == 0:
             rebinned_values.append(0)
             pd.Series(rebinned_values).to_csv(root_dir / 'data.csv')
@@ -99,7 +100,5 @@ for bin in range(1, sampling_time * sampling_rate + 1):
             bpm = round(bpm_values[-1])
             rebinned_values.append(bpm)
             pd.Series(rebinned_values).to_csv(root_dir / 'data.csv', index=False)
-        
-            
 
 print('Sampling complete!')
