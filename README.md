@@ -51,6 +51,7 @@ Connect CS/SHDN on the MCP3008 ADC to GPIO 8 (CE0) on the Raspberry Pi using pin
 Connect GND on the MAX9814 microphone to GND on the Raspberry Pi using pin 25<br />
 Connect V+ on the MAX9814 microphone to 3.3V on the Raspberry Pi using pin pin 17<br />
 Connect OUT on the MAX9814 microphone to CH0 on the MCP3008 ADC<br />
+
 ![Raspberry Pi pinout](https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png)
 ![MCP3008 ADC pinout](https://cdn-learn.adafruit.com/assets/assets/000/001/222/medium800/raspberry_pi_mcp3008pin.gif)
 ![MAX9814 microphone pinout](https://pmdway.com/cdn/shop/products/Electret-Microphone-Amplifier-MAX9814-Auto-Gain-Control-pmdway-3_708x408.jpg)
