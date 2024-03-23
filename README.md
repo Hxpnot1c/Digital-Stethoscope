@@ -6,7 +6,7 @@
 
 ## Video Presentation
 
-[![Substitutionary Rick Roll to be replaced with presentation video](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[![Substitutionary Rick Roll to be replaced with presentation video](https://img.youtube.com/vi/tSeS5dvHLK4/0.jpg)](https://www.youtube.com/watch?v=tSeS5dvHLK4)
 
 ## Video Demonstration
 
