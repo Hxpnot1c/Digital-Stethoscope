@@ -1,7 +1,3 @@
-![Calday Robotics Logo](https://github.com/Hxpnot1c/Digital-Stethoscope/blob/main/docs/calday_robotics_logo.png)
-
---------------------------------------------------------------------------------
-
 # Digital-Stethoscope
 
 ## Video Presentation
