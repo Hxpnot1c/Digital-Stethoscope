@@ -19,9 +19,10 @@ class AudioDataset():
     
 
     def __getitem__(self, index):
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         file_dir = self.annotations.iloc[index, 0]
-        features = torch.tensor(self.gen_features(file_dir))
-        label = torch.tensor(self.encoded_labels[index])
+        features = torch.tensor(self.gen_features(file_dir), device=device)
+        label = torch.tensor(self.encoded_labels[index], device=device)
         return features, label
     
 
@@ -34,30 +35,32 @@ class AudioDataset():
     def load_WAV(self, filename):
         file_dir = self.DATASET_DIR.joinpath(filename)
         data, sr = librosa.load(file_dir, sr=22050, offset=0)
-        resampled_data = librosa.resample(data, orig_sr=sr, target_sr=self.SAMPLE_RATE)
+        resampled_data = librosa.resample(data, orig_sr=sr, target_sr=1000)
+        resampled_data = librosa.resample(resampled_data, orig_sr=1000, target_sr=self.SAMPLE_RATE)
         return resampled_data
     
 
     def gen_features(self, filename):
         data = self.load_WAV(filename)
-        features = np.array([])
 
         mean_zero_crossing_rate = np.mean(librosa.feature.zero_crossing_rate(y=data).T, axis=0)
-        features = np.hstack((features, mean_zero_crossing_rate))
+        mean_zero_crossing_rate = np.pad(mean_zero_crossing_rate, (64, 63))
+        features = np.array(mean_zero_crossing_rate)
 
         stft_data = np.abs(librosa.stft(data))
         chroma_mean = np.mean(librosa.feature.chroma_stft(S=stft_data, sr=self.SAMPLE_RATE).T, axis=0)
-        features = np.hstack((features, chroma_mean))
+        chroma_mean = np.pad(chroma_mean, (58, 58))
+        features = np.vstack((features, chroma_mean))
 
         mfcc_data = np.mean(librosa.feature.mfcc(y=data, sr=self.SAMPLE_RATE).T, axis=0)
-        features = np.hstack((features, mfcc_data))
+        mfcc_data = np.pad(mfcc_data, (54, 54))
+        features = np.vstack((features, mfcc_data))
         
         rms_data = np.mean(librosa.feature.rms(y=data).T, axis=0)
-        features = np.hstack((features, rms_data))
+        rms_data = np.pad(rms_data, (64, 63))
+        features = np.vstack((features, rms_data))
 
         mel_data = np.mean(librosa.feature.melspectrogram(y=data, sr=self.SAMPLE_RATE).T, axis=0)
-        features = np.hstack((features, mel_data))
+        features = np.vstack((features, mel_data))
 
         return features
-
-#DataTest = AudioDataset('Res/DigiScope Dataset/', 'training_labels.csv')
