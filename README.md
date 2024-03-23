@@ -91,7 +91,7 @@ Run the following commands in the terminal to run the program:<br />
 ## Further Reading
 <details>
     <summary>Definitions and useful links</summary>
-<br />
+
 Definitions:
     Heart Arrhythmia:<br />
     An arrhythmia is an abnormality of the heart's rhythm.
