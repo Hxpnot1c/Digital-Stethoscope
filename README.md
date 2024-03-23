@@ -34,7 +34,8 @@ By facilitating early detection of cardiac irregularities, the Digital Stethosco
 
  
 ## Build Guide
-
+<details>
+    <summary>Build guide</summary>
 Print all 3D models in 'Digital-Stethoscope/3d_models':<br />
 -  PLA_Stethoscope_Head.stl should be printed in PLA with 100% infil<br />
 -  PLA_Stethoscope_Ring.stl should be printed in PLA with 100% infill<br />
@@ -90,3 +91,4 @@ Run the following commands in the terminal to run the program:<br />
 'sudo chrt 99 python src/model_prediction.py'
 'sudo chrt 99 python src/gui.py'
 'sudo chrt 99 python src/data_acquisition.py'
+</details>
