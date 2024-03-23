@@ -31,7 +31,6 @@ By facilitating early detection of cardiac irregularities, the Digital Stethosco
 <details>
     <summary>Build guide</summary>
 <br />
-    
 Print all 3D models in 'Digital-Stethoscope/3d_models':<br />
 -  PLA_Stethoscope_Head.stl should be printed in PLA with 100% infil<br />
 -  PLA_Stethoscope_Ring.stl should be printed in PLA with 100% infill<br />
@@ -92,6 +91,7 @@ Run the following commands in the terminal to run the program:<br />
 ## Further Reading
 <details>
     <summary>Definitions and useful links</summary>
+<br />
 Definitions:
 Heart Arrhythmia:<br />
 An arrhythmia is an abnormality of the heart's rhythm.
