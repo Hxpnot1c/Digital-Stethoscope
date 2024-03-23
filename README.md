@@ -25,10 +25,7 @@ Healthcare providers will be able to receive immediate feedback and diagnostic s
 One of the main benefits of this digital stethoscope is its low cost. With a total cost of only £40.94. Compared to traditional stethoscopes, our stethoscope presents itself as a key-choice in resource-constrained settings. In order to achieve this, we used a Raspberry Pi 3 Model B+ due to its sufficient processing power while minimising costs and an FDM 3D printer to create a majority of the stethoscope. The head and ring are made out of PLA and the connection piece for the microphone is made out of TPU to provide a sound isolating fit for the microphone. The cost allows for our design to be much more accessible in areas where medical resources are limited.
 
 By facilitating early detection of cardiac irregularities, the Digital Stethoscope enables timely intervention and improved patient outcomes. Its accessibility extends to underserved communities, where access to specialised equipment is limited. With its potential to revolutionise cardiac diagnostics in developing countries, the Digital Stethoscope holds promise for saving lives and improving healthcare delivery worldwide.
-
-
 </details>
-
  
 ## Build Guide
 <details>
@@ -91,12 +88,11 @@ Run the following commands in the terminal to run the program:<br />
 'sudo chrt 99 python src/data_acquisition.py'
 </details>
 
-
-##Further Reading
+## Further Reading
 <details>
     <summary>Definitions and useful links</summary>
 <br />
-###Definitions:
+### Definitions:
     Heart Arrhythmia:<br />
     An arrhythmia is an abnormality of the heart's rhythm.
 
@@ -172,7 +168,7 @@ Run the following commands in the terminal to run the program:<br />
 
 
 
-###Links to helpful videos:
+### Links to helpful videos:
 	But what is a neural network? | Chapter 1, Deep learning by 3Blue1Brown<br />
 	But what is a convolution? by 3Blue1Brown<br />
     But what is the Fourier Transform?  A visual introduction. by 3Blue1Brown<br />
