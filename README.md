@@ -14,7 +14,7 @@
 
 ## Summary
 <details>
-    <summary>500 word summary</summary>
+    <summary>500 Word Summary</summary>
     Insert 500 word summary here
 </details>
 
