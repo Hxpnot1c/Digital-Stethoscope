@@ -95,9 +95,9 @@ plt.show()
 
 # Writing .wav files for unfiltered and filtered audio data
 remapped_input_signal = np.int16(remap_range(np.array(input_signal), 0, 1023, -31768, 32767))
-write('Res/Archived_Data/Audio/Input_Signal.wav', sampling_rate, remapped_input_signal)
+write('res/Archived_Data/Audio/Input_Signal.wav', sampling_rate, remapped_input_signal)
 remapped_filtered_signal = np.int16(remap_range(np.array(band_pass_signal), 0, 1023, -31768, 32767))
-write('Res/Archived_Data/Audio/Filtered_Signal.wav', sampling_rate, remapped_filtered_signal)
+write('res/Archived_Data/Audio/Filtered_Signal.wav', sampling_rate, remapped_filtered_signal)
 
 # Plot frquency domain data for unfiltered and filtered data using fast fourier transform
 samples = sampling_rate * sampling_time
@@ -110,5 +110,5 @@ ax1.set_title('Frequency Domain Input Signal')
 ax2.plot(x, y2, linestyle='solid', linewidth=0.4)
 ax2.set_title('Frequency Domain Filtered Signal')
 plt.xlim(0, 500)
-plt.savefig('Res/Archived_Data/Image Plots/Frequency Domain Raw vs Filtered Data.png', bbox_inches='tight')
+plt.savefig('res/Archived_Data/Image Plots/Frequency Domain Raw vs Filtered Data.png', bbox_inches='tight')
 plt.show()

@@ -46,5 +46,5 @@ print(f'No. of samples: {samples}')
 print(f'Mean val: {mean(binned_values)}')
 # Plots the data and saves it to Digital-Stethoscope/Res/Data_Test
 plt.plot(binned_timestamps, binned_values, linestyle='solid', linewidth=0.4)
-plt.savefig('Res/Data_Test.png', bbox_inches='tight')
+plt.savefig('res/Data_Test.png', bbox_inches='tight')
 plt.show()
