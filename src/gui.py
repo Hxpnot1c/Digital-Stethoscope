@@ -53,15 +53,24 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         #integrating graph into the frame
         self.canvas = LivePlotCanvas(self)
-        self.y_data = [375 for x in range(500*8)]
-        self.x_data = [x/500 for x in range(0, 500*8)]
+        self.y_data = [375 for x in range(500*4)]
+        self.x_data = [x/500 for x in range(0, 500*4)]
         self._plot_ref = None
+        self.canvas.axes.set_facecolor('#2a2e32')
+        self.canvas.figure.set_facecolor('#2a2e32')
+        self.canvas.axes.set_ylim(0, 800)
+        self.canvas.axes.xaxis.set_visible(False)
+        self.canvas.axes.yaxis.set_visible(False)
         self.update_plot()
         self.horizontalLayout_4.addWidget(self.canvas)
         self.timer = QtCore.QTimer(self.centralwidget)
         self.timer.setInterval(10)
-        self.timer.timeout.connect(self.check_for_updates)
+        self.timer.timeout.connect(self.check_for_plot_updates)
         self.timer.start()
+        self.timer2 = QtCore.QTimer(self.centralwidget)
+        self.timer2.setInterval(100)
+        self.timer2.timeout.connect(self.ai_indicator)
+        self.timer2.start()
 
         #AI frame
         self.frame_2 = QtWidgets.QFrame(parent=self.centralwidget)
@@ -69,20 +78,6 @@ class Ui_MainWindow(object):
         self.frame_2.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_2.setObjectName("frame_2")
-        
-        #function to change colour of bordor when ai has an output currently configured to a button for testing
-        def ai_indicator():
-            self.frame_2.setStyleSheet("border-color: #00cc00;")
-            self.label_2.hide()
-            
-        #reset fields
-        def reset():
-            self.ageLineEdit.clear()
-            self.patientNameLineEdit.clear()
-            self.sexLineEdit.clear()
-            self.DoBlineEdit.clear()
-            self.textEdit.clear()
-            
             
         self.label = QtWidgets.QLabel(parent=self.frame_2)
         self.label.setGeometry(QtCore.QRect(18, 15, 851, 301))
@@ -107,7 +102,7 @@ class Ui_MainWindow(object):
         self.pushButton.setGeometry(QtCore.QRect(350, 260, 241, 51))
         self.pushButton.setObjectName("pushButton")
         #calling reset function on click
-        self.pushButton.clicked.connect(reset)
+        self.pushButton.clicked.connect(self.reset)
         self.formLayoutWidget = QtWidgets.QWidget(parent=self.frame_3)
         self.formLayoutWidget.setGeometry(QtCore.QRect(10, 20, 551, 231))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
@@ -145,17 +140,42 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.BPM = QtWidgets.QLabel(parent=self.frame)
-        self.BPM.setGeometry(QtCore.QRect(1640, 510, 85, 100))
+        self.BPM.setGeometry(QtCore.QRect(1650, 545, 85, 100))
         self.BPM.setAlignment(QtCore.Qt.AlignRight)
         self.BPM.setObjectName("BPM")
         self.BPM.setText("000")
         self.BPM.adjustSize()
 
-    def check_for_updates(self):
-        if (data := list(pd.read_csv(self.root_dir / 'data.csv').iloc[:, -1])) != self.data:
-            self.data = data
-            self.BPM.setText(str(int(data[-1])))
-            self.update_plot()
+    #function to change colour of bordor when ai has an output currently configured to a button for testing
+    def ai_indicator(self):
+        inference = pd.read_csv(self.root_dir / "inference.csv")
+        if inference.iloc[0, 0] > -1:
+            self.frame_2.setStyleSheet("border-color: #00cc00;")
+            self.label_2.hide()
+            if inference.iloc[0, 0] == 0:
+                self.label.setText(f'\tDiagnosis: Normal\n\tConfidence: {inference.iloc[0, 1] * 100:.1f}%\n\n\tTo maintain a healthy heart, the NHS recommends:\n\t   \u2022 Regular exercise\n\t   \u2022 Avoiding fatty foods\n\t   \u2022 Try to reduce stress')
+            if inference.iloc[0, 0] == 1:
+                self.label.setText(f'\tDiagnosis: Extrasystole\n\tConfidence: {inference.iloc[0, 1] * 100:.1f}%\n\n\tExtra heart sounds can be caused by a variety of factors such as:\n\t     Anxiety, stress and fatigue\n\tSymptoms include:\n\t     Palpitations, dizziness, weakness and difficulty breaathing\n\tTreatments include:\n\t     Exercise, beta-blockers and treatment for underlying cause of extrasystole')
+            if inference.iloc[0, 0] == 2:
+                self.label.setText(f'\tDiagnosis: Murmur\n\tConfidence: {inference.iloc[0, 1] * 100:.1f}%\n\n\tMurmurs can be caused by a variety of factors such as:\n\t     Fever, anemia, hyperthyroidism, rapid growth, exercise, pregnancy, congenital heart\n\t     defects, degenerative valve disease, endocarditis and rheumatic fever\n\tSymptoms include:\n\t     Discolouration of fingernails and/or lips, chest pain, persistent cough, dizziness, swelling\n\t     of liver and/or neck veins, fainting, heavy sweating, shortness of breath and sudden\n\t     weight gain\n\tTreatments include:\n\t     Anti-arrhythmic medications, ACE inhibitors or ARBs, blood thinners, antibiotics, surgery\n\t     or cardiac catheterisation')    
+    
+    #reset fields
+    def reset(self):
+        self.ageLineEdit.clear()
+        self.patientNameLineEdit.clear()
+        self.sexLineEdit.clear()
+        self.DoBlineEdit.clear()
+        self.textEdit.clear()
+        
+    def check_for_plot_updates(self):
+        try:
+            if (data := list(pd.read_csv(self.root_dir / 'data.csv').iloc[:, -1])) != self.data:
+                self.data = data
+                bpm = int(self.data[-1])
+                self.BPM.setText(f'{bpm: >3}')
+                self.update_plot()
+        except pd.errors.EmptyDataError:
+            pass
     
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -176,25 +196,15 @@ class Ui_MainWindow(object):
         self.DoB.setText(_translate("MainWindow", "DoB"))
     #Plotting Graph function (Using test data)
     def update_plot(self):
-        print('test')
-        self.y_data = self.y_data[50:] + self.data[:50]
-        
         if self._plot_ref is None:
             plot_refs = self.canvas.axes.plot(self.x_data, self.y_data, 'r')
             self._plot_ref = plot_refs[0]
 
         else:
+            self.y_data = self.y_data[400:] + self.data[:400]
             self._plot_ref.set_ydata(self.y_data)
         
         self._plot_ref.set_color('#ffffff')
-        self.canvas.axes.set_facecolor('#2a2e32')
-        self.canvas.figure.set_facecolor('#2a2e32')
-        self.canvas.axes.spines['right'].set_visible(False)
-        plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
-
-        self.canvas.axes.xaxis.label.set_color('white')
-        self.canvas.axes.yaxis.label.set_color('white')
-        self.canvas.axes.tick_params(colors='white')
 
         self.canvas.draw()
 

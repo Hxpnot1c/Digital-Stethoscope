@@ -4,6 +4,7 @@ import numpy as np
 import time
 import pandas as pd
 import pathlib
+from soundfile import write
 
 root_dir = pathlib.Path(__file__).resolve().parent
 
@@ -13,12 +14,9 @@ spi_device = 0
 mcp = MCP3008(spi=SpiDev(spi_port, spi_device))
 
 
-# Computes mean of inputted NumPy array
 def mean(values):
     if not len(values):
-        print("Error")
         return mcp.read_adc(0)
-        # values.append(np.random.randint(0, 1024))
     sum = np.sum(values)
     mean = sum / len(values)
     return mean
@@ -47,12 +45,11 @@ def calculate_heart_rate(t1, t2, t3, t4, t5):
     return bpm
 
 
-values, binned_values, binned_timestamps, bpm_sample_times = [], [], [], []
+values, binned_values, bpm_sample_times, bpm_values = [], [], [], []
 sampling_rate = 1000
 sample_period = 1 / sampling_rate
-sampling_time = 200
+sampling_time = 180
 bpm_sample_num = 11 + 2
-bpm_values = []
 
 print('Sampling...')
 next_bpm_sample_time = 0
@@ -70,7 +67,7 @@ for bin in range(1, sampling_time * sampling_rate + 1):
     values = []
 
     # Creates list of timestamps for each new sample of duration sample_period
-    binned_timestamps.append(current_time := sample_period * bin - (sample_period * 0.5))
+    current_time = sample_period * bin - (sample_period * 0.5)
     if mean_val >= 700 and current_time >= next_bpm_sample_time:
         bpm_sample_times.append(current_time)
         next_bpm_sample_time = current_time + 0.2
@@ -88,11 +85,11 @@ for bin in range(1, sampling_time * sampling_rate + 1):
             t1, t2, t3, t4, t5 = cycle_forward(bpm_sample_times[-1] - bpm_sample_times[-3], t1, t2, t3, t4, t5)
             bpm_values.append(calculate_heart_rate(t1, t2, t3, t4, t5)) 
 
-    if (bin+1) % 1000 == 0:
-        newest_bins = binned_values[-1000:]
+    if (bin+1) % 800 == 0:
+        newest_bins = binned_values[-800:]
         rebinned_values = []
-        for index in range(50):
-            rebinned_values.append(sum(newest_bins[index*20:(index+1)*20]) / 20)
+        for index in range(400):
+            rebinned_values.append(sum(newest_bins[index*2:(index+1)*2]) / 2)
         if len(bpm_values) == 0:
             rebinned_values.append(0)
             pd.Series(rebinned_values).to_csv(root_dir / 'data.csv')
@@ -100,5 +97,10 @@ for bin in range(1, sampling_time * sampling_rate + 1):
             bpm = round(bpm_values[-1])
             rebinned_values.append(bpm)
             pd.Series(rebinned_values).to_csv(root_dir / 'data.csv', index=False)
+
+    if (bin+1) % 10000 == 0:
+        data = remap_range(np.array(binned_values), 0, 1024, -1, 1)
+        write(file=root_dir / 'audio_data.wav', data=data, samplerate=sampling_rate)
+        binned_values = []
 
 print('Sampling complete!')
