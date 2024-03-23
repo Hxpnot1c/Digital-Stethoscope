@@ -48,16 +48,16 @@ Note: Our models were printed using a Creality CR10 Smart Pro 3D printer. Most F
 We also used the default setting on Cura slicer (with 100% infill).<br />
 For Stethoscope Ring: Supports ON - Normal<br />
 
-For the diaphragm we used a 40mm diameter silicone piece with a thickness of 0.35mm
+For the diaphragm, we used a 40mm diameter silicone piece with a thickness of 0.35mm
 
 See Assembly Video below for a 3D rendering of how to assemble the 3D printed parts and the diaphragm.
 
-[![Substitutionary Rick Roll to be replaced with assembly video](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[![Substitutionary Rick Roll to be replaced with assembly video](https://img.youtube.com/vi/KgJvibv4-vc/0.jpg)](https://www.youtube.com/watch?v=KgJvibv4-vc)
 
 All connections require no adhesive and rely on a friction fit.
-In order to attach the Ring some pressure will be required this will then provide a tight fit.
+In order to attach the Ring some pressure will be required, this will then provide a tight fit.
 
-Microphone will then also provide a tight fit into the TPU connection piece
+The microphone will then also provide a tight fit into the TPU connection piece
 
 The following connections may require soldering and the use of breadboards. Please see the below pinout images to demonstrate pin connections.<br />
 Connect V<sub>DD</sub> on the MCP3008 ADC to 3.3V on the Raspberry Pi using pin 17<br />
