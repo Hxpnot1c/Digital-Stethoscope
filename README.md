@@ -65,7 +65,7 @@ Connect D<sub>OUT</sub> on the MCP3008 ADC to GPIO 9 (MISO) on the Raspberry Pi 
 Connect D<sub>IN</sub> on the MCP3008 ADC to GPIO 10 (MOSI) on the Raspberry Pi using pin 19<br />
 Connect CS/SHDN on the MCP3008 ADC to GPIO 8 (CE0) on the Raspberry Pi using pin 8<br />
 Connect GND on the MAX9814 microphone to GND on the Raspberry Pi using pin 25<br />
-Connect V+ on the MAX9814 microphone to 3.3V on the Raspberry Pi using pin pin 17<br />
+Connect V+ on the MAX9814 microphone to 3.3V on the Raspberry Pi using pin 17<br />
 Connect OUT on the MAX9814 microphone to CH0 on the MCP3008 ADC<br />
 
 ![Raspberry Pi pinout](https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png)
