@@ -6,10 +6,11 @@ from time import sleep
 import pandas as pd
 from model import ConvolutionalNN
 
-df = pd.DataFrame([[-1, -1]])
-df.to_csv('inference.csv', index=False)
-
 root_dir = pathlib.Path(__file__).resolve().parent
+
+df = pd.DataFrame([[-1, -1]])
+df.to_csv(root_dir / 'inference.csv', index=False)
+
 device = torch.device('cpu')
 model = ConvolutionalNN().to(device)
 model.load_state_dict(torch.load(root_dir / 'model.pth', map_location=device))
@@ -17,7 +18,7 @@ model.eval()
 
 def gen_features():
     SAMPLE_RATE = 10000
-    data, _ = librosa.load(root_dir / 'audio_data.wav', sr=10000, offset=0)
+    data, _ = librosa.load(root_dir / 'audio_files/dataset_murmur.wav', sr=10000, offset=0)
     sr = 1000
     original_data = librosa.resample(data, orig_sr=10000, target_sr=1000)
     #original_data, sr = librosa.load(root_dir / 'audio_data.wav', sr=1000, offset=0)
@@ -52,15 +53,15 @@ def one_hot_encode(label):
 
 input = torch.tensor(gen_features(), device=device).unsqueeze(0)
 loss_fucntion = torch.nn.CrossEntropyLoss()
-while True:
-    sleep(2)
-    if not torch.all(input.eq(new_data := torch.tensor(gen_features(), device=device).unsqueeze(0))):
-        input = new_data
-        output = model(input.float())
-        _, prediction = torch.max(output, 1)
-        prediction = int(prediction)
-        #confidence = (1-float(torch.nn.CrossEntropyLoss(output.float(), input.float()).detach)) * 100
-        confidence = 1-abs(loss_fucntion(output.float(), one_hot_encode(prediction).unsqueeze(0).float()).item())
-        print(prediction, confidence*100)
-        df = pd.DataFrame([[prediction, confidence]])
-        df.to_csv(root_dir / 'inference.csv', index=False)
+#while True:
+#    sleep(2)
+#    if not torch.all(input.eq(new_data := torch.tensor(gen_features(), device=device).unsqueeze(0))):
+#input = new_data
+output = model(input.float())
+_, prediction = torch.max(output, 1)
+prediction = int(prediction)
+#confidence = (1-float(torch.nn.CrossEntropyLoss(output.float(), input.float()).detach)) * 100
+confidence = 1-abs(loss_fucntion(output.float(), one_hot_encode(prediction).unsqueeze(0).float()).item())
+print(f'Diagnosis: {prediction}\nConfidence: {confidence*100:.1f}')
+df = pd.DataFrame([[prediction, confidence]])
+df.to_csv(root_dir / 'inference.csv', index=False)
