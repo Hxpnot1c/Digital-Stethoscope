@@ -10,7 +10,7 @@
 
 ## Video Demonstration
 
-[![Substitutionary Rick Roll to be replaced with demonstration video](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[![Substitutionary Rick Roll to be replaced with demonstration video](https://img.youtube.com/vi/pRtG8VmfHiQ/0.jpg)](https://www.youtube.com/watch?v=pRtG8VmfHiQ)
 
 ## Summary
 <details>
