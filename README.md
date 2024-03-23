@@ -15,7 +15,8 @@
 ## Summary
 <details>
     <summary>500 Word Summary</summary>
-    In regions where access to advanced medical equipment is limited, diagnosing cardiac irregularities such as arrhythmias, murmurs and extrasystoles poses significant challenges for healthcare providers. Our solution; a 3D printed, digital stethoscope with integrated AI. 
+    
+In regions where access to advanced medical equipment is limited, diagnosing cardiac irregularities such as arrhythmias, murmurs and extrasystoles poses significant challenges for healthcare providers. Our solution; a 3D printed, digital stethoscope with integrated AI. 
 
 While analogue stethoscopes are still a vital and valued tool, it poses issues that need to be addressed. Namely, the heartbeat can be quiet, making it difficult for doctors to accurately diagnose. Moreover, they lack visual representation, which could enhance understanding.
 
@@ -36,6 +37,7 @@ By facilitating early detection of cardiac irregularities, the Digital Stethosco
 ## Build Guide
 <details>
     <summary>Build guide</summary>
+
 Print all 3D models in 'Digital-Stethoscope/3d_models':<br />
 -  PLA_Stethoscope_Head.stl should be printed in PLA with 100% infil<br />
 -  PLA_Stethoscope_Ring.stl should be printed in PLA with 100% infill<br />
