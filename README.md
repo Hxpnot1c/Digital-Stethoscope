@@ -32,7 +32,9 @@ We also used the default setting on Cura slicer (with 100% infill).<br />
 For Stethoscope Ring: Supports ON - Normal<br />
 
 See Assembly Video below for a 3D rendering of how to assemble the 3D printed parts and the diaphragm.
+
 [![Substitutionary Rick Roll to be replaced with assembly video](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
 All connections require no adhesive and rely on a friction fit.
 In order to attach the Ring some pressure will be required this will then provide a tight fit.
 
@@ -52,3 +54,22 @@ Connect OUT on the MAX9814 microphone to CH0 on the MCP3008 ADC<br />
 ![Raspberry Pi pinout](https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png)
 ![MCP3008 ADC pinout](https://cdn-learn.adafruit.com/assets/assets/000/001/222/medium800/raspberry_pi_mcp3008pin.gif)
 ![MAX9814 microphone pinout](https://pmdway.com/cdn/shop/products/Electret-Microphone-Amplifier-MAX9814-Auto-Gain-Control-pmdway-3_708x408.jpg)
+
+The Raspberry Pi should be setup with Raspberry Pi OS (Legacy, 64 bit)<br />
+Note: 64 bit is required for pytorch
+
+Install the following dependencies using pip:<br />
+-  adafruit_mcp3008
+-  librosa
+-  matplotlib
+-  pandas
+-  pyqt5
+-  soundfile
+-  torch
+
+Download 'Digital-Stethoscope/src'
+
+Run the following commands in the terminal to run the program:<br />
+'sudo chrt 99 python src/model_prediction.py'
+'sudo chrt 99 python src/gui.py'
+'sudo chrt 99 python src/data_acquisition.py'
