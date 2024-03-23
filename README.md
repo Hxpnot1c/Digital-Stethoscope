@@ -6,11 +6,11 @@
 
 ## Video Presentation
 
-[![Video presentation by Calday Robotics](https://img.youtube.com/vi/tSeS5dvHLK4/0.jpg)](https://www.youtube.com/watch?v=tSeS5dvHLK4)
+[![Presentation video by Calday Robotics](https://img.youtube.com/vi/tSeS5dvHLK4/0.jpg)](https://www.youtube.com/watch?v=tSeS5dvHLK4)
 
 ## Video Demonstration
 
-[![Substitutionary Rick Roll to be replaced with demonstration video](https://img.youtube.com/vi/pRtG8VmfHiQ/0.jpg)](https://www.youtube.com/watch?v=pRtG8VmfHiQ)
+[![Demonstration video by Calday Robotics](https://img.youtube.com/vi/pRtG8VmfHiQ/0.jpg)](https://www.youtube.com/watch?v=pRtG8VmfHiQ)
 
 ## Summary
 <details>
