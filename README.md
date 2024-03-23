@@ -32,8 +32,8 @@ By facilitating early detection of cardiac irregularities, the Digital Stethosco
     <summary>Build guide</summary>
 <br />
 Print all 3D models in 'Digital-Stethoscope/3d_models':<br />
--  PLA_Stethoscope_Head.stl should be printed in PLA with 100% infil<br />
--  PLA_Stethoscope_Ring.stl should be printed in PLA with 100% infill<br />
+-  PLA_Stethoscope_Head.stl should be printed in PLA with 100% infil
+-  PLA_Stethoscope_Ring.stl should be printed in PLA with 100% infill
 -  TPU_Stethoscope_Connection.stl should be printed in TPU with 100% infill
 
 Note: Our models were printed using a Creality CR10 Smart Pro 3D printer. Most FDM 3D printers will be sufficient.<br />
