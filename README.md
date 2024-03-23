@@ -92,7 +92,7 @@ Run the following commands in the terminal to run the program:<br />
 <details>
     <summary>Definitions and useful links</summary>
 <br />
-### Definitions:
+Definitions:
     Heart Arrhythmia:<br />
     An arrhythmia is an abnormality of the heart's rhythm.
 
@@ -168,9 +168,9 @@ Run the following commands in the terminal to run the program:<br />
 
 
 
-### Links to helpful videos:
-	But what is a neural network? | Chapter 1, Deep learning by 3Blue1Brown<br />
-	But what is a convolution? by 3Blue1Brown<br />
+Links to helpful videos:
+    But what is a neural network? | Chapter 1, Deep learning by 3Blue1Brown<br />
+    But what is a convolution? by 3Blue1Brown<br />
     But what is the Fourier Transform?  A visual introduction. by 3Blue1Brown<br />
 
 </details>
