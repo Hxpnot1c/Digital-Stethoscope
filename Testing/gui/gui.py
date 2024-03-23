@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         MainWindow.setEnabled(True)
         MainWindow.resize(1920, 1080)
         # Opening Stylesheet for the GUI
-        with open(Path("gui/guistyle.css"), "r") as f:
+        with open(Path("testing/gui/guistyle.css"), "r") as f:
                 MainWindow.setStyleSheet(f.read())
         
         #temporary variable which will hold ai output
@@ -48,9 +48,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         #integrating graph into the frame
         self.canvas = LivePlotCanvas(self)
-        self.y_data = [375 for x in range(1000 * 8)]
-        self.x_data = [x/1000 for x in range(0, 8000)]
-
+        self.y_data = [375 for x in range(500*8)]
+        self.x_data = [x/500 for x in range(0, 500*8)]
         self._plot_ref = None
         self.update_plot()
         self.timer = QtCore.QTimer()
@@ -139,6 +138,13 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.BPM = QtWidgets.QLabel(parent=self.frame)
+        self.BPM.setGeometry(QtCore.QRect(1640, 510, 85, 100))
+        self.BPM.setAlignment(QtCore.Qt.AlignRight)
+        self.BPM.setObjectName("BPM")
+        self.BPM.setText("123")
+        self.BPM.adjustSize()
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -158,7 +164,7 @@ class Ui_MainWindow(object):
         self.DoB.setText(_translate("MainWindow", "DoB"))
     #Plotting Graph function (Using test data)
     def update_plot(self):
-        self.y_data = self.y_data[100:] + list(random.randint(0, 1000, 100))
+        self.y_data = self.y_data[50:] + list(random.randint(0, 1000, 50))
         
         if self._plot_ref is None:
             plot_refs = self.canvas.axes.plot(self.x_data, self.y_data, 'r')

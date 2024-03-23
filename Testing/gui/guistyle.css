@@ -3,7 +3,17 @@
     src: url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@200..800&display=swap");
     font-weight: normal;
     font-style: normal;
+
+	font-family: 'Kantumruy Pro';
+    src: url("https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap");
+    font-weight: normal;
+    font-style: normal;
+
 }
+
+
+    
+
 
 QWidget#centralwidget{
 	background-color: #212529;
@@ -14,12 +24,18 @@ QWidget#centralwidget{
 QFrame {
 				background-color: #2a2e32;
 				border-radius: 25px;
-                font: 14pt "Manrope";		
+                font: 8pt "Manrope";		
 }
 
 QLabel{
 				color:  rgb(255, 255, 255);
-							
+				font: 14pt 		
+}
+
+QLabel#BPM{
+	font: 120px "Kantumruy Pro";
+	color:  #e55039;
+	background-color: transparent;	
 }
 
 QLineEdit{				
