@@ -6,7 +6,10 @@ import pathlib
 
 
 class AudioDataset():
+    '''This class works with the pytorch DataLoader to load training and test data from res/DigiScope_Dataset to use to train and test the model'''
+
     def __init__(self, DATASET_DIR, annotations_file):
+        # Initialises class
         self.DATASET_DIR = pathlib.Path(DATASET_DIR)
         annotations_file = self.DATASET_DIR.joinpath(annotations_file)
         self.annotations = pd.read_csv(annotations_file)
@@ -15,10 +18,14 @@ class AudioDataset():
     
 
     def __len__(self):
+        # This is one of the required functions
+        # Returns length of dataset
         return len(self.annotations)
     
 
     def __getitem__(self, index):
+        # This is one of the required functions
+        # Returns a datapoint with its label for a given index
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         file_dir = self.annotations.iloc[index, 0]
         features = torch.tensor(self.gen_features(file_dir), device=device)
@@ -27,12 +34,14 @@ class AudioDataset():
     
 
     def one_hot_encode(self, labels, classes):
+        # One hot encodes label data to use to train the model
         encoded_labels = np.zeros((labels.size, classes))
         encoded_labels[np.arange(labels.size), labels] = 1
         return encoded_labels
 
 
     def load_WAV(self, filename):
+        # Loads .wav file and resamples to 1000Hz and then back to 10000Hz to mimic data collected at 1000Hz that is then resampled to 10000Hz like our stethoscope data
         file_dir = self.DATASET_DIR.joinpath(filename)
         data, sr = librosa.load(file_dir, sr=22050, offset=0)
         resampled_data = librosa.resample(data, orig_sr=sr, target_sr=1000)
@@ -41,6 +50,7 @@ class AudioDataset():
     
 
     def gen_features(self, filename):
+        # Generates features such as zero crossing rate, chroma stft, mfcc, rms and mel spectrogram from audio data
         data = self.load_WAV(filename)
 
         mean_zero_crossing_rate = np.mean(librosa.feature.zero_crossing_rate(y=data).T, axis=0)
