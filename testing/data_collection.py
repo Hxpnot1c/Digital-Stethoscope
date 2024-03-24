@@ -6,9 +6,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Access ADC using hardware SPI (because its faster)
-spi_port = 0
-spi_device = 0
-mcp = MCP3008(spi=SpiDev(spi_port, spi_device))
+SPI_PORT = 0
+SPI_DEVICE = 0
+mcp = MCP3008(spi=SpiDev(SPI_PORT, SPI_DEVICE))
 
 # Computes mean of inputted NumPy array
 def mean(values):
@@ -21,17 +21,17 @@ def mean(values):
 
 values, binned_values, binned_timestamps = [], [], []
 samples = 0
-sampling_rate = 1000
-sampling_period = 1 / sampling_rate
-sample_time = 10
+SAMPLING_RATE = 1000
+SAMPLING_PERIOD = 1 / SAMPLING_RATE
+SAMPLE_TIME = 10
 
 
 print('Sampling...')
-starttime = time.perf_counter()
+STARTTIME = time.perf_counter()
 # Iterates through bins
-for bin in range(1, sample_time * sampling_rate + 1):
+for bin in range(1, SAMPLE_TIME * SAMPLING_RATE + 1):
     # Collects data samples using sample_data() function for 1 sample_period seconds (1 millisecond)
-    t_end = starttime + (bin * sampling_period)
+    t_end = STARTTIME + (bin * SAMPLING_PERIOD)
     while time.perf_counter() < t_end:
         values.append(mcp.read_adc(0))
     # Computes mean of data from 1ms of sampling and appends it binned_values
@@ -39,7 +39,7 @@ for bin in range(1, sample_time * sampling_rate + 1):
     samples += len(values)
     values = []
     # Creates list of timestamps for each new sample of duration sampling_period
-    binned_timestamps.append(sampling_period * bin - (sampling_period * 0.5))
+    binned_timestamps.append(SAMPLING_PERIOD * bin - (SAMPLING_PERIOD * 0.5))
 
 print('Sampling complete!')
 print(f'No. of samples: {samples}')

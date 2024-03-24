@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import time
 
 # Access ADC using hardware SPI (because its faster)
-spi_port = 0
-spi_device = 0
-mcp = MCP3008(spi=SpiDev(spi_port, spi_device, 5000))
+SPI_PORT = 0
+SPI_DEVICE = 0
+mcp = MCP3008(spi=SpiDev(SPI_PORT, SPI_DEVICE, 5000))
 
 # Data sampling function as a generator that outputs the current data value on a specified ADC channel and provides a timestamp of the data reading
 def sample_data(channel=0):
@@ -21,10 +21,10 @@ def sample_data(channel=0):
 
 values = []
 timestamps = []
-t_end = time.time() + 10
+T_END = time.time() + 10
 # Iterates through generator function to create a list of values with their timestamps for a period of 10 seconds
 for adc_value, timestamp in sample_data():
-    if time.time() >= t_end:
+    if time.time() >= T_END:
         break
     values.append(adc_value)
     timestamps.append(timestamp)

@@ -64,12 +64,12 @@ bpm_sample_num = 11 + 2
 next_bpm_sample_time = 0
 
 print('Sampling...')
-starttime = time.perf_counter()
+STARTTIME = time.perf_counter()
 
 # Main loop to collect heart data and use equal width binning to go from a variable sampling rate to a sampling rate of 1000
 # Iterates through bins
 for bin in range(1, SAMPLING_TIME * SAMPLING_RATE + 1):
-    t_end = starttime + (bin * SAMPLE_PERIOD) # Time to sample upto for current bin
+    t_end = STARTTIME + (bin * SAMPLE_PERIOD) # Time to sample upto for current bin
 
     # Samples for 1ms and saves data to values
     while (time.perf_counter()) < t_end:

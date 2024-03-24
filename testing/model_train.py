@@ -8,20 +8,20 @@ from model import ConvolutionalNN
 
 
 # Loads data into dataset class
-dataset = AudioDataset('res/DigiScope Dataset', 'upsampled_training_labels.csv')
+DATASET = AudioDataset('res/DigiScope Dataset', 'upsampled_training_labels.csv')
 
 # Splits dataset into training and test data with proportions of 0.9 and 0.1 respectively
-train, test = random_split(dataset, (0.9, 0.1))
+train, test = random_split(DATASET, (0.9, 0.1))
 
 # Creates train and test loaders using pytorch DataLoader
-train_loader = DataLoader(dataset=train, shuffle=True, batch_size=64, drop_last=True)
-test_loader = DataLoader(dataset=test, shuffle=True, batch_size=len(test), drop_last=True)
+TRAIN_LOADER = DataLoader(dataset=train, shuffle=True, batch_size=64, drop_last=True)
+TEST_LOADER = DataLoader(dataset=test, shuffle=True, batch_size=len(test), drop_last=True)
     
 
 # Trains model on CUDA GPU if available, otherwise trains on CPU
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-model = ConvolutionalNN().to(device)
-print(f'Running on {device}')
+DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+model = ConvolutionalNN().to(DEVICE)
+print(f'Running on {DEVICE}')
 
 
 # Outputs summary of model architecture
@@ -46,6 +46,8 @@ def epoch_function(model, train_dataloader, test_datalaoder, loss_function, opti
     
     running_loss = 0
     running_accuracy = 0
+
+
     # Iterates through test dataset to test model after every epoch
     for index, test_data in enumerate(test_datalaoder):
         test_inputs, test_labels = test_data
@@ -64,6 +66,7 @@ def epoch_function(model, train_dataloader, test_datalaoder, loss_function, opti
     mean_test_accuracy = running_accuracy / (index+1) # Calculates mean proportion of test data predicted correctly
 
     return mean_training_loss, mean_test_loss, mean_test_accuracy
+
 
 def train_model(model, train_dataloader, test_loader, loss_function, optimiser, epochs):
     # Trains model for specified number of epochs and outputs useful metrics
@@ -84,11 +87,13 @@ def train_model(model, train_dataloader, test_loader, loss_function, optimiser, 
     print('Training complete!')
     print(f'\nFinal:\t\tLoss: {train_loss:.5f}\t\tTest set loss: {test_loss:.5f}\t\tAccuracy: {test_accuracy:.5f}')
 
+
 loss_function = nn.CrossEntropyLoss() # Defines loss function
 optimiser = torch.optim.AdamW(model.parameters(), weight_decay=1e-3) # Defines optimiser with weight decay
 
+
 # Trains model for a maximum of 300 epochs
-train_model(model, train_loader, test_loader, loss_function, optimiser, 3000)
+train_model(model, TRAIN_LOADER, TEST_LOADER, loss_function, optimiser, 3000)
 
 # Saves model parameters to model.pth
 torch.save(model.state_dict(), 'testing/model.pth')
