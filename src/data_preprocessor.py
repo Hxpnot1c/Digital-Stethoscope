@@ -17,13 +17,13 @@ class AudioDataset():
     
 
     def __len__(self):
-        # This is one of the required functions
+        # This is one of the required functions for the pytorch DataLoader
         # Returns length of dataset
         return len(self.annotations)
     
 
     def __getitem__(self, index):
-        # This is one of the required functions
+        # This is one of the required functions for the pytorch DataLoader
         # Returns a datapoint with its label for a given index
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         file_dir = self.annotations.iloc[index, 0]
