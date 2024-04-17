@@ -7,7 +7,7 @@ import pandas as pd
 # Class to add canvas for live figure plot of heart data on the GUI
 class LivePlotCanvas(FigureCanvas):
      # Parent argument is not used here but is still kept to align with GUI development standard practices
-     def __init__(self, width=18.51, height=6.51, parent=None):
+     def __init__(self, parent=None, width=18.51, height=6.51):
         # Creates figure of dimensions 1851x651px
         fig = Figure(figsize=(width, height))
         # Sets first subplot as a 1x1 grid
