@@ -172,7 +172,7 @@ class Ui_MainWindow(object):
 
         # Label widget which contains BPM data
         self.BPM = QtWidgets.QLabel(parent=self.frame)
-        self.BPM.setGeometry(QtCore.QRect(1650, 525, 85, 100))
+        self.BPM.setGeometry(QtCore.QRect(1640, 525, 85, 100))
         self.BPM.setAlignment(QtCore.Qt.AlignRight)
         self.BPM.setObjectName("BPM")
 
@@ -183,7 +183,11 @@ class Ui_MainWindow(object):
     # Function to change colour of border when AI has an output currently configured to a button for testing
     def ai_indicator(self):
         # Reads inference.csv which contains current inference from the AI
-        inference = pd.read_csv(self.root_dir / "inference.csv")
+        try:
+            inference = pd.read_csv(self.root_dir / "inference.csv")
+
+        except pd.errors.EmptyDataError:
+            pass
 
         # Only updates the AI section of the GUI if the AI has an output (diagnosis of -1 signifies AI is still collecting data or processing data)
         if inference.iloc[0, 0] > -1:
