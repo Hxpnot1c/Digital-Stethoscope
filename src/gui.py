@@ -172,7 +172,7 @@ class Ui_MainWindow(object):
 
         # Label widget which contains BPM data
         self.BPM = QtWidgets.QLabel(parent=self.frame)
-        self.BPM.setGeometry(QtCore.QRect(1650, 545, 85, 100))
+        self.BPM.setGeometry(QtCore.QRect(1650, 525, 85, 100))
         self.BPM.setAlignment(QtCore.Qt.AlignRight)
         self.BPM.setObjectName("BPM")
 
